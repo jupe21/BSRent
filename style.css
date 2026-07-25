@@ -940,9 +940,12 @@ textarea { resize: vertical; min-height: 110px; }
   }
   .nav-links.open { right: 0; }
 
+  .nav-links li { width: 100%; }
+
   .nav-link {
+    display: block;
     width: 100%;
-    padding: 8px 12px;
+    padding: 12px 12px;
     font-size: 1rem;
   }
   .nav-cta-desktop { display: none; }
