@@ -254,6 +254,32 @@ img { max-width: 100%; display: block; }
   padding: 120px 24px 80px;
 }
 
+.hero-bg-photo {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background: url('images/hero-vans.webp') center center / cover no-repeat;
+  opacity: 0.32;
+}
+.hero-bg-photo::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to bottom,
+    rgba(15,15,15,0.72) 0%,
+    rgba(15,15,15,0.42) 45%,
+    var(--bg) 100%
+  );
+}
+
+/* na portretnih (ozkih) zaslonih uporabi navpično sliko, da sta oba kombija vidna čez cel hero */
+@media (max-aspect-ratio: 1/1) {
+  .hero-bg-photo {
+    background-image: url('images/hero-vans-mobile.webp');
+  }
+}
+
 .hero-bg-grid {
   position: absolute;
   inset: 0;
@@ -378,7 +404,7 @@ img { max-width: 100%; display: block; }
 /* ─── FLEET ─── */
 #flota {
   padding: 100px 0;
-  background: var(--bg-2);
+  background: var(--bg);
 }
 
 .fleet-grid {
@@ -411,32 +437,36 @@ img { max-width: 100%; display: block; }
 }
 
 .fleet-img {
-  height: 180px;
   position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  overflow: hidden;
+  background: #dfe6df;
+  aspect-ratio: 5 / 4;
 }
-.fleet-img-icon {
-  font-size: 4rem;
-  filter: drop-shadow(0 4px 12px rgba(0,0,0,0.4));
+.fleet-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 46%;
+  transition: transform 0.5s ease;
+}
+.fleet-card:hover .fleet-img img {
+  transform: scale(1.04);
 }
 .fleet-badge {
   position: absolute;
   top: 14px;
   right: 14px;
-  background: rgba(255,255,255,0.07);
-  color: var(--text-3);
-  padding: 4px 10px;
-  border-radius: 4px;
+  background: rgba(15,15,15,0.72);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  color: #fff;
+  padding: 5px 12px;
+  border-radius: 6px;
   font-size: 0.7rem;
   font-weight: 600;
   letter-spacing: 0.06em;
   text-transform: uppercase;
-}
-.fleet-badge--orange {
-  background: rgba(249,115,22,0.15);
-  color: var(--orange);
+  border: 1px solid rgba(255,255,255,0.14);
 }
 
 .fleet-body {
@@ -482,10 +512,20 @@ img { max-width: 100%; display: block; }
   padding: 3px 8px;
 }
 
+.fleet-cta {
+  text-align: center;
+  margin-top: 40px;
+}
+.fleet-cta-note {
+  color: var(--text-2);
+  font-size: 0.9rem;
+  margin-bottom: 16px;
+}
+
 /* ─── CENIK ─── */
 #cene {
   padding: 100px 0;
-  background: var(--bg);
+  background: var(--bg-2);
 }
 
 .pricing-wrapper {
@@ -498,12 +538,13 @@ img { max-width: 100%; display: block; }
   overflow: hidden;
   border: 1px solid var(--border);
   margin-bottom: 16px;
+  box-shadow: 0 16px 48px rgba(0,0,0,0.28);
 }
 
 .pricing-table {
   width: 100%;
   border-collapse: collapse;
-  background: var(--bg-2);
+  background: var(--bg-3);
 }
 
 .pricing-table thead th {
@@ -515,7 +556,7 @@ img { max-width: 100%; display: block; }
   letter-spacing: 0.08em;
   color: var(--text-3);
   border-bottom: 1px solid var(--border);
-  background: var(--bg-3);
+  background: var(--bg-2);
 }
 .pricing-table thead th:not(:first-child) { text-align: right; }
 
@@ -627,10 +668,61 @@ img { max-width: 100%; display: block; }
   justify-content: center;
 }
 
-/* ─── CONTACT ─── */
-#kontakt {
+/* ─── O NAS ─── */
+#o-nas {
   padding: 100px 0;
   background: var(--bg-2);
+}
+
+.about-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 48px;
+  align-items: center;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.about-img {
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  border: 1px solid var(--border);
+  box-shadow: 0 24px 64px rgba(0,0,0,0.4);
+}
+.about-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  aspect-ratio: 3 / 2;
+}
+
+.about-text .section-tag {
+  margin-bottom: 16px;
+}
+.about-text h2 {
+  font-size: clamp(1.6rem, 3.5vw, 2.4rem);
+  font-weight: 800;
+  line-height: 1.2;
+  margin-bottom: 20px;
+}
+.about-text p {
+  color: var(--text-2);
+  font-size: 1rem;
+  line-height: 1.7;
+  margin-bottom: 16px;
+}
+.about-text p:last-child { margin-bottom: 0; }
+
+/* ─── CONTACT ─── */
+#kontakt {
+  position: relative;
+  padding: 100px 0;
+  background-image:
+    linear-gradient(to bottom, rgba(15,15,15,0.88) 0%, rgba(15,15,15,0.93) 100%),
+    url('images/kontakt-bg.webp');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
 }
 
 .contact-wrapper {
@@ -883,6 +975,12 @@ textarea { resize: vertical; min-height: 110px; }
   .step-arrow { transform: rotate(90deg) !important; }
 
   .form-row { grid-template-columns: 1fr; }
+
+  .about-grid {
+    grid-template-columns: 1fr;
+    gap: 28px;
+    max-width: 480px;
+  }
 
   .hero-stats { padding: 16px 20px; }
   .stat { padding: 0 16px; }
